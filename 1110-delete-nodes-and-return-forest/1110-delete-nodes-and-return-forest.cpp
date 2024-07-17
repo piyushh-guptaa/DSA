@@ -1,19 +1,26 @@
 class Solution {
-private:
-    bool set[1001] = {};
-    void dfs(TreeNode* &root, bool flag, vector<TreeNode*>& res){
-        if (root == nullptr) return;
-        dfs(root->left, set[root->val], res);
-        dfs(root->right, set[root->val], res);
-        if (!set[root->val] && flag) res.push_back(root);
-        if (set[root->val]) root = nullptr;
+    vector<TreeNode*>res;
+    unordered_set<int>st;
+    void deleteNode(TreeNode* &root){
+        if(root){
+            deleteNode(root->left);
+            deleteNode(root->right);
+            if(st.find(root->val)!=st.end()){
+                if(root->left) res.push_back(root->left);
+                if(root->right) res.push_back(root->right);
+                root=NULL;
+                
+            }
+        }
     }
+
 public:
     vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
-        vector<TreeNode*> res;
-        for (int num : to_delete)
-            set[num] = true;
-        dfs(root, true, res);
+        for(int i=0;i<to_delete.size();i++){
+            st.insert(to_delete[i]);
+        }
+        deleteNode(root);
+        if(root)res.push_back(root);
         return res;
     }
 };
