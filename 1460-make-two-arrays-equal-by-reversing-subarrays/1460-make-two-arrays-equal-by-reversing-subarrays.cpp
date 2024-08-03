@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool canBeEqual(std::vector<int>& target, std::vector<int>& arr) {
+    bool canBeEqual(vector<int>& target, vector<int>& arr) {
         unordered_map<int, int> countTarget, countArr;
         for (int num : target) {
             countTarget[num]++;
