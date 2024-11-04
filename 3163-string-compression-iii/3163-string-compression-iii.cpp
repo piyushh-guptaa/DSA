@@ -5,19 +5,20 @@
 class Solution {
 public:
     string compressedString(string word) {
-        unordered_map<char, int> map;
         string comp = "";
-        int i = 0;
-        while (i < word.length()) {
-            char currentChar = word[i];
-            map[currentChar] = 0;
-            while (i < word.length() && word[i] == currentChar && map[currentChar] < 9) {
-                map[currentChar]++;
-                i++;
+        int cnt = 1, n = word.size();
+        char ch = word[0];
+        for(int i=1;i<n;i++){
+            if(word[i] == ch && cnt < 9)cnt++;
+            else{
+                comp.push_back(cnt+'0');
+                comp.push_back(ch);
+                ch = word[i];
+                cnt = 1;
             }
-            comp += to_string(map[currentChar]) + currentChar;
         }
-
+        comp.push_back(cnt+'0');
+        comp.push_back(ch);
         return comp;
     }
 };
